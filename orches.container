@@ -1,0 +1,19 @@
+[Unit]
+Description=Orches: container orchestrator
+
+[Container]
+Image=ghcr.io/orches-team/orches:latest
+Exec=run
+Environment=XDG_RUNTIME_DIR=/run/user/%U
+Volume=%h/.config/orches:/var/lib/orches
+Volume=%h/.config/containers/systemd:/etc/containers/systemd
+Mount=type=bind,source=/run/user/%U/systemd,destination=/run/user/%U/systemd,rw=true
+UserNS=keep-id
+PodmanArgs=--pid host
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
+

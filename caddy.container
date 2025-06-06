@@ -1,0 +1,9 @@
+[Unit]
+Description=Caddy demo container
+
+[Container]
+Image=docker.io/library/caddy:latest
+PublishPort=8080:80
+
+[Install]
+WantedBy=multi-user.target
