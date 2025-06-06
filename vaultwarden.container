@@ -1,0 +1,10 @@
+[Container]
+Image=docker.io/vaultwarden/server:latest
+Volume=vaultwarden-data:/data:Z
+PublishPort=8082:80
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,10 @@
+[Container]
+Image=docker.io/grafana/grafana-oss:latest
+Volume=grafana-data:/var/lib/grafana:Z
+PublishPort=3000:3000
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

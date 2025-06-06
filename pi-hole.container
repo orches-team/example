@@ -1,0 +1,18 @@
+# The web interface will be available on port 8081.
+# You must set a password by changing `changeme` below.
+# Using NET_ADMIN is optional and only required for DHCP server functionality.
+[Container]
+Image=docker.io/pihole/pihole:latest
+PublishPort=53:53/tcp
+PublishPort=53:53/udp
+PublishPort=8081:80/tcp
+Volume=pihole-etc:/etc/pihole:Z
+Volume=pihole-dnsmasq.d:/etc/dnsmasq.d:Z
+Environment=WEBPASSWORD=changeme
+PodmanArgs=--cap-add=NET_ADMIN
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,12 @@
+[Container]
+Image=docker.io/jellyfin/jellyfin
+Volume=jellyfin-config:/config:Z
+Volume=jellyfin-cache:/cache:Z
+Volume=media:/media:Z
+PublishPort=8096:8096
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
