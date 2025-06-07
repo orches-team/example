@@ -1,7 +1,7 @@
 [Container]
-Image=docker.io/grafana/grafana-oss:latest
+Image=docker.io/grafana/grafana-oss:12.0.0
 Volume=grafana-data:/var/lib/grafana:Z
-PublishPort=3000:3000
+PublishPort=8081:3000
 
 [Service]
 Restart=on-failure
