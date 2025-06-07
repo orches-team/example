@@ -1,9 +1,9 @@
 [Container]
-Image=ghcr.io/ajnart/homarr:latest
+Image=ghcr.io/homarr-labs/homarr:v1.22.0
 Volume=homarr-configs:/app/data/configs:Z
 Volume=homarr-icons:/app/public/icons:Z
 Volume=homarr-data:/app/data:Z
-PublishPort=7575:7575
+PublishPort=8082:7575
 
 [Service]
 Restart=on-failure
