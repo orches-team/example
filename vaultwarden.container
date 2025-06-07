@@ -1,5 +1,5 @@
 [Container]
-Image=docker.io/vaultwarden/server:latest
+Image=docker.io/vaultwarden/server:1.34.0
 Volume=vaultwarden-data:/data:Z
 PublishPort=8082:80
 
