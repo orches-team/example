@@ -9,7 +9,7 @@ PublishPort=7575:7575
 [Service]
 Restart=on-failure
 # Generate a random encryption key if it doesn't exist
-ExecStartPre=sh -c '[ ! -f %h/homarr.key ] && echo SECRET_ENCRYPTION_KEY=$(head -c 32 /dev/urandom | od -An -tx1 | tr -d " \n") > %h/homarr.key'
+ExecStartPre=sh -c '[ -f %h/homarr.key ] || echo SECRET_ENCRYPTION_KEY=$(head -c 32 /dev/urandom | od -An -tx1 | tr -d " \n") > %h/homarr.key'
 
 [Install]
 WantedBy=default.target
