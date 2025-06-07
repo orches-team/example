@@ -1,14 +1,8 @@
 [Container]
-Image=code.forgejo.org/forgejo/latest
+Image=codeberg.org/forgejo/forgejo:11.0.1
 PublishPort=10080:3000
 PublishPort=10022:22
 Volume=forgejo-data:/data:Z
-Volume=/etc/localtime:/etc/localtime:ro
-Environment=FORGEJO__database__DB_TYPE=sqlite3
-Environment="FORGEJO__server__ROOT_URL=http://localhost:10080"
-Environment="FORGEJO__server__SSH_DOMAIN=localhost"
-Environment="FORGEJO__server__SSH_PORT=10022"
-ContainerName=forgejo
 
 [Service]
 Restart=on-failure
