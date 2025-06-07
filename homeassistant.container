@@ -1,6 +1,6 @@
 # This container uses host networking. The web interface will be available on port 8123.
 [Container]
-Image=ghcr.io/home-assistant/home-assistant:stable
+Image=ghcr.io/home-assistant/home-assistant:2025.5.2
 Volume=homeassistant-config:/config:Z
 Volume=/etc/localtime:/etc/localtime:ro
 PodmanArgs=--network=host
