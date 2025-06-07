@@ -1,0 +1,3 @@
+https::// {
+    reverse_proxy systemd-vaultwarden:80
+}

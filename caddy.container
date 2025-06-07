@@ -1,0 +1,13 @@
+[Container]
+Image=docker.io/caddy:2.10.0-alpine
+Network=main.network
+PublishPort=4443:443
+PublishPort=4443:443/udp
+Volume=caddy-data:/data:Z
+Volume=%h/.config/orches/repo/Caddyfile:/etc/caddy/Caddyfile:z
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
