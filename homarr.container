@@ -3,10 +3,13 @@ Image=ghcr.io/homarr-labs/homarr:v1.22.0
 Volume=homarr-configs:/app/data/configs:Z
 Volume=homarr-icons:/app/public/icons:Z
 Volume=homarr-data:/app/data:Z
+EnvironmentFile=%h/homarr.key
 PublishPort=8082:7575
 
 [Service]
 Restart=on-failure
+# Generate a random encryption key if it doesn't exist
+ExecStartPre=sh -c '[ ! -f %h/homarr.key ] && echo SECRET_ENCRYPTION_KEY=$(openssl rand -hex 32) > %h/homarr.key'
 
 [Install]
 WantedBy=default.target
