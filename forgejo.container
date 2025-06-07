@@ -1,7 +1,7 @@
 [Container]
 Image=codeberg.org/forgejo/forgejo:11.0.1
-PublishPort=10080:3000
-PublishPort=10022:22
+PublishPort=8080:3000
+PublishPort=2222:22
 Volume=forgejo-data:/data:Z
 
 [Service]
