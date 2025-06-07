@@ -5,10 +5,10 @@ PublishPort=4443:443
 PublishPort=4443:443/udp
 Volume=caddy-data:/data:Z
 Volume=%h/.config/orches/repo/Caddyfile:/etc/caddy/Caddyfile:z
-X-Version=1
 
 [Service]
 Restart=on-failure
+X-Version=1
 
 [Install]
 WantedBy=default.target
