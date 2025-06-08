@@ -9,16 +9,16 @@ Feel free to [fork this repository](https://github.com/orches-team/example/fork)
 To run this example deployment with orches, execute the following commands:
 
 ```bash
-loginctl enable-linger (whoami)
+loginctl enable-linger $(whoami)
 
 mkdir -p ~/.config/orches ~/.config/containers/systemd
 
 podman run --rm -it --userns=keep-id --pid=host --pull=newer \
   --mount \
-    type=bind,source=/run/user/(id -u)/systemd,destination=/run/user/(id -u)/systemd \
+    type=bind,source=/run/user/$(id -u)/systemd,destination=/run/user/$(id -u)/systemd \
   -v ~/.config/orches:/var/lib/orches \
   -v ~/.config/containers/systemd:/etc/containers/systemd  \
-  --env XDG_RUNTIME_DIR=/run/user/(id -u) \
+  --env XDG_RUNTIME_DIR=/run/user/$(id -u) \
   ghcr.io/orches-team/orches init \
   https://github.com/orches-team/example.git
 ```
