@@ -1,3 +1,7 @@
-https:// {
+{
+    default_sni {YOUR_IP_ADDRESS}
+}
+
+https://{YOUR_IP_ADDRESS} {
     reverse_proxy systemd-vaultwarden:80
 }
