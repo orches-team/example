@@ -65,3 +65,82 @@ Self-hosted monitoring tool
 **Port:** `3001`
 
 You can customize this deployment by editing or adding unit files in this repository. For more information, see the [orches documentation](https://github.com/orches-team/orches#readme).
+
+## Enabling Extra Services
+
+Some services are included but disabled by default. To enable them:
+
+1. **Fork this repository** to your own GitHub account.
+2. **Clone your fork** locally and make the desired changes (such as adding or modifying configuration files for the extra services).
+3. **Push your changes** to your forked repository.
+4. On your orches host, **switch orches to use your fork** by running:
+
+  ```bash
+  podman exec systemd-orches orches switch <YOUR_FORK_URL>
+  ```
+
+5. orches will automatically apply the changes and start the newly enabled services.
+
+For more details, see the [orches documentation](https://github.com/orches-team/orches#readme).
+
+### Disabled Services
+
+- **vaultwarden** – Self-hosted password manager
+- **pi-hole** – Network-wide ad blocker
+
+#### Enabling vaultwarden
+To enable **vaultwarden** with HTTPS using Caddy, enable the required unit files:
+
+```bash
+mv caddy.container.disabled caddy.container
+mv main.network.disabled main.network
+mv vaultwarden.container.disabled vaultwarden.container
+```
+
+2. **Edit the `Caddyfile`** and replace `{YOUR_IP_ADDRESS}` with your node's actual IP address.
+  > **Note:** Using a domain name is recommended for production, but this quick start uses your IP for simplicity.
+
+  Example diff for `Caddyfile`:
+
+  ```diff
+  {
+  -    default_sni {YOUR_IP_ADDRESS}
+  +    default_sni 192.168.1.42
+  }
+
+  -https://{YOUR_IP_ADDRESS} {
+  +https://192.168.1.42 {
+      reverse_proxy systemd-vaultwarden:80
+  }
+  ```
+
+3. **Sync orches** to apply the changes:
+
+  ```bash
+  podman exec systemd-orches orches sync
+  ```
+
+You can now access vaultwarden at `https://<YOUR_IP_ADDRESS>:4443/`.
+
+#### Enabling pi-hole
+
+To enable **pi-hole** (which requires binding to port 53):
+
+1. **Allow unprivileged users to bind to port 53** (required for rootless Podman):
+Allow non-root users to bind to port 53 and above by running:
+
+```bash
+echo "net.ipv4.ip_unprivileged_port_start=53" | sudo tee /etc/sysctl.d/50-unprivileged-ports.conf
+sudo sysctl --system
+```
+
+2. **Remove the `.disabled` suffix** from the following file:
+  - `pihole.container.disabled` → `pihole.container`
+
+3. **Sync orches** to apply the changes:
+
+  ```bash
+  podman exec systemd-orches orches sync
+  ```
+
+Pi-hole should now be running and accessible on your server. The dashboard is available at http://<YOUR_IP_ADDRESS>:8082/.

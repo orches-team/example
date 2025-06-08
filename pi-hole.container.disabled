@@ -5,7 +5,7 @@
 Image=docker.io/pihole/pihole:2025.05.1
 PublishPort=53:53/tcp
 PublishPort=53:53/udp
-PublishPort=8081:80/tcp
+PublishPort=8082:80/tcp
 Volume=pihole-etc:/etc/pihole:Z
 Volume=pihole-dnsmasq.d:/etc/dnsmasq.d:Z
 Environment=WEBPASSWORD=changeme
