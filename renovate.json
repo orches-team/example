@@ -2,5 +2,18 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update quadlet container images",
+      "fileMatch": [
+        "[.]container([.]disabled)?$"
+      ],
+      "matchStrings": [
+        "Image=(?<depName>\\S*):(?<currentValue>\\S*)"
+      ],
+      "datasourceTemplate": "docker"
+    }
   ]
 }
