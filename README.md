@@ -1,40 +1,18 @@
 ![orches logo](https://raw.githubusercontent.com/orches-team/common/main/orches-logo-text.png)
 
-# orches-config-rootless: Rootless orches Template Repository
+# [orches](https://github.com/orches-team/orches) example deployment
 
-This repository provides a rootless configuration template for [orches](https://github.com/orches-team/orches), a simple git-ops tool for orchestrating [Podman](https://podman.io/) containers and systemd units on a single machine. It is designed for users who want to run orches and managed containers without root privileges, leveraging systemd user services and Podman rootless containers.
-
-## Contents
-
-- [Overview](#overview)
-- [Quick Start](#quick-start)
-- [Repository Structure](#repository-structure)
-- [Customizing Your Deployment](#customizing-your-deployment)
-
-## Overview
-
-This repository contains sample unit files for running orches and a demo [Caddy](https://caddyserver.com/) webserver as rootless Podman containers. It is intended to be used as a starting point for your own orches deployments. You can fork this repository and add or modify unit files to manage your own containers and services.
+Feel free to [fork this repository](https://github.com/orches-team/example/fork), or use the [minimal rootless template](https://github.com/orches-team/orches-config-rootless), or the [rootful template](https://github.com/orches-team/orches-config-rootful) to get started quickly.
 
 ## Quick Start
 
-### Prerequisites
-- Podman >= 4.4
-- systemd (user mode)
+To run this example deployment with orches, execute the following commands:
 
-Tested on Fedora 41, Ubuntu 24.04, and CentOS Stream 9/derivatives.
-
-### 1. Enable systemd user lingering
 ```bash
 loginctl enable-linger (whoami)
-```
 
-### 2. Create required directories
-```bash
 mkdir -p ~/.config/orches ~/.config/containers/systemd
-```
 
-### 3. Initialize orches with this repository
-```bash
 podman run --rm -it --userns=keep-id --pid=host --pull=newer \
   --mount \
     type=bind,source=/run/user/(id -u)/systemd,destination=/run/user/(id -u)/systemd \
@@ -42,44 +20,48 @@ podman run --rm -it --userns=keep-id --pid=host --pull=newer \
   -v ~/.config/containers/systemd:/etc/containers/systemd  \
   --env XDG_RUNTIME_DIR=/run/user/(id -u) \
   ghcr.io/orches-team/orches init \
-  https://github.com/orches-team/orches-config-rootless.git
+  https://github.com/orches-team/example.git
 ```
 
-### 4. Verify orches and caddy are running
-```bash
-systemctl --user status orches
-systemctl --user status caddy
-podman exec systemd-orches orches status
-curl localhost:8080
-```
+This will initialize orches with the contents of this repository and start all defined services as user units.
 
-## Repository Structure
+## Included Services
 
-- `orches.container`: Unit file for running orches as a rootless Podman container
-- `caddy.container`: Example unit file for running a Caddy webserver
+The following services are installed and managed by default:
 
-You can add more `.container` or `.service` files to manage additional containers or systemd services.
+### [forgejo](https://forgejo.org/)
+Self-hosted Git service
 
-## Customizing Your Deployment
+**Ports:** web: `8080`, ssh: `2222`
 
-To add a new application (e.g., [Jellyfin](https://jellyfin.org/)):
-1. Fork this repository and clone it locally.
-2. Add a new unit file, e.g. `jellyfin.service`:
+### [grafana](https://grafana.com/)
+Analytics and monitoring dashboard
 
-```ini
-[Container]
-Image=docker.io/jellyfin/jellyfin
-Volume=config:/config:Z
-Volume=cache:/cache:Z
-Volume=media:/media:Z
-PublishPort=8096:8096
+**Port:** `8081`
 
-[Install]
-WantedBy=multi-user.target default.target
-```
+### [homarr](https://homarr.dev/)
+Simple and customizable homepage for your server
 
-3. Commit and push your changes.
-4. Switch orches to your fork:
-```bash
-podman exec systemd-orches orches switch <YOUR_FORK_URL>
-```
+**Port:** `7575`
+
+### [homeassistant](https://www.home-assistant.io/)
+Open-source home automation platform
+
+**Port:** `8123`
+
+### [jellyfin](https://jellyfin.org/)
+Media server for streaming movies, TV, music, and more
+
+**Port:** `8096`
+
+### [syncthing](https://syncthing.net/)
+Continuous file synchronization
+
+**Ports:** web: `8384`, sync: `22000/tcp+udp`, discovery: `21027/udp`
+
+### [uptime-kuma](https://github.com/louislam/uptime-kuma)
+Self-hosted monitoring tool
+
+**Port:** `3001`
+
+You can customize this deployment by editing or adding unit files in this repository. For more information, see the [orches documentation](https://github.com/orches-team/orches#readme).
