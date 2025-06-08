@@ -1,5 +1,5 @@
 [Container]
-Image=lscr.io/linuxserver/syncthing:1.29.6
+Image=lscr.io/linuxserver/syncthing:1.29.7
 Volume=syncthing-config:/config:Z
 Volume=syncthing-data:/data:Z
 PublishPort=8384:8384
