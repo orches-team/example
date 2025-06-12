@@ -2,7 +2,7 @@
 # You must set a password by changing `changeme` below.
 # Using NET_ADMIN is optional and only required for DHCP server functionality.
 [Container]
-Image=docker.io/pihole/pihole:2025.06.1
+Image=docker.io/pihole/pihole:2025.06.2
 PublishPort=53:53/tcp
 PublishPort=53:53/udp
 PublishPort=8082:80/tcp
