@@ -1,5 +1,5 @@
 [Container]
-Image=ghcr.io/homarr-labs/homarr:v1.23.0
+Image=ghcr.io/homarr-labs/homarr:v1.26.0
 Volume=homarr-configs:/app/data/configs:Z
 Volume=homarr-icons:/app/public/icons:Z
 Volume=homarr-data:/app/data:Z
