@@ -1,5 +1,5 @@
 [Container]
-Image=docker.io/caddy:2.10.0-alpine
+Image=docker.io/caddy:2.11.4-alpine
 Network=main.network
 PublishPort=4443:443
 PublishPort=4443:443/udp
